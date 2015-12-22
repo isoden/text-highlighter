@@ -28,6 +28,29 @@ We 💓 TypeScript!
 </script>
 ```
 
+### Support Zenkaku & Hankaku
+
+```html
+before
+
+<div id="container">
+We 💓 ＴｙｐｅＳｃｒｉｐｔ!
+</div>
+
+<script>
+  ...
+  // apply highlight
+  textHighlighter.highlight('typescript');
+</script>
+
+after
+
+<div id="container">
+We 💓 <mark>ＴｙｐｅＳｃｒｉｐｔ</mark>!
+</div>
+
+```
+
 ## Thanks
 
 - http://stackoverflow.com/questions/10416643/highlight-words-in-html-using-regex-javascript-almost-there
