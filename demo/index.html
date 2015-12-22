@@ -12,7 +12,7 @@
 
       .highlight {
         padding: 0;
-        background: #f0f;
+        background: rgba(255, 0, 255, .2);
       }
 
       .box {
@@ -39,13 +39,10 @@
 - スペースで復数ワード検索
 - 全角・半角を問わず検索(半角カナなんてない)
 - 大文字・小文字を問わず検索
-- 対象要素内のHTMLテキストはエスケープされる
 
 JavaScript
 ＪａｖａＳｃｒｉｐｔ
 ＪaｖaＳcｒiｐt
-
-&lt;b onmouseenter="alert('xss')"&gt;foo&lt;/b&gt;
 
 !"#$%&amp;'()*+,-./
 ！＂＃＄％＆＇（）＊＋，－．／
@@ -71,7 +68,7 @@ pqrstuvwxyz{|}~
     <script>
     var inputNode   = document.getElementById('input');
     var resultNode  = document.getElementById('result');
-    var highlighter = new TextHighlighter.default(resultNode);
+    var highlighter = new TextHighlighter(resultNode);
 
     inputNode.addEventListener('keyup', function () {
       highlighter.highlight(inputNode.value);
