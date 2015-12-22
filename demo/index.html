@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+      body {
+        padding: 25px;
+        background: #f5f8fa;
+      }
+
+      .highlight {
+        padding: 0;
+        background: #f0f;
+      }
+
+      .box {
+        padding: 1em;
+        border: 1px solid #eee;
+        border-radius: 2px;
+        background: #fff;
+        word-break: break-word;
+        white-space: pre;
+        font-size: 12px;
+        font-family: consolas, Ricty, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-xs-12">
+          <input id="input" type="text" value="java ワード" class="form-control"/>
+          <div id="result" class="box"># 対象テキスト内に検索ワードが含まれている場合に、そのワードをハイライトする。
+
+&lt;mark&gt;bar&lt;/mark&gt;
+
+- スペースで復数ワード検索
+- 全角・半角を問わず検索(半角カナなんてない)
+- 大文字・小文字を問わず検索
+- 対象要素内のHTMLテキストはエスケープされる
+
+JavaScript
+ＪａｖａＳｃｒｉｐｔ
+ＪaｖaＳcｒiｐt
+
+&lt;b onmouseenter="alert('xss')"&gt;foo&lt;/b&gt;
+
+!"#$%&amp;'()*+,-./
+！＂＃＄％＆＇（）＊＋，－．／
+
+0123456789:;&lt;=&gt;?
+０１２３４５６７８９：；＜＝＞？
+
+@ABCDEFGHIJKLMNO
+＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯ
+
+PQRSTUVWXYZ[\]^_
+ＰＱＲＳＴＵＶＷＸＹＺ［＼］＾＿
+
+\`abcdefghijklmno
+｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏ
+
+pqrstuvwxyz{|}~
+ｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～</div>
+        </div>
+      </div>
+    </div>
+    <script src="../lib/text-highlighter.js"></script>
+    <script>
+    var inputNode   = document.getElementById('input');
+    var resultNode  = document.getElementById('result');
+    var highlighter = new TextHighlighter.default(resultNode);
+
+    inputNode.addEventListener('keyup', function () {
+      highlighter.highlight(inputNode.value);
+    });
+    inputNode.dispatchEvent(new KeyboardEvent('keyup'));
+    </script>
+  </body>
+</html>
