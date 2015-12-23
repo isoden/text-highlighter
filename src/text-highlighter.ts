@@ -1,13 +1,11 @@
 
+import {
+  toFullWidth,
+  toHalfWidth,
+  escapeRegExp,
+  first
+} from './util';
 
-/**
- * 配列の最初の要素を返却する
- * @param  array 対象の配列
- * @return 最初の要素
- */
-function first<T>(array: T[]): T {
-  return array == null ? void 0 : array[0];
-}
 
 export = class TextHighlighter {
   public rxSearchWords: RegExp;
@@ -24,15 +22,6 @@ export = class TextHighlighter {
   }
 
   /**
-   * 正規表現で特殊な意味を持つ記号をエスケープする
-   * @param  str 入力文字列
-   * @return エスケープ後の文字列
-   */
-  protected static _escapeRegExp(str: string = ''): string {
-    return str.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
-  }
-
-  /**
    * _getFullWidthAndHalfWidth
    */
   protected static _getFullWidthAndHalfWidth(str: string = ''): string {
@@ -40,27 +29,9 @@ export = class TextHighlighter {
 
       // 全角⇔半角に変換可能な場合は全角半角両方にマッチするようにする (例: a => (?:a|ａ))
       return /[！-～!-~]/.test(v)
-        ? `(?:${TextHighlighter._escapeRegExp(TextHighlighter._toHalfWidth(v))}|${TextHighlighter._escapeRegExp(TextHighlighter._toFullWidth(v))})`
-        : TextHighlighter._escapeRegExp(v);
+        ? `(?:${escapeRegExp(toHalfWidth(v))}|${escapeRegExp(toFullWidth(v))})`
+        : escapeRegExp(v);
     }).join('');
-  }
-
-  /**
-   * 全角文字を半角文字に変換する
-   * @param  str 入力文字列
-   * @return 半角に変換後の文字列
-   */
-  protected static _toHalfWidth(str: string = ''): string {
-    return str.replace(/[！-～]/g, match => String.fromCharCode(match.charCodeAt(0) - 0xFEE0));
-  }
-
-  /**
-   * 半角文字を全角文字に変換する
-   * @param  str 入力文字列
-   * @return 全角に変換後の文字列
-   */
-  protected static _toFullWidth(str: string = ''): string {
-    return str.replace(/[!-~]/g, match => String.fromCharCode(match.charCodeAt(0) + 0xFEE0));
   }
 
   /**
@@ -137,5 +108,4 @@ export = class TextHighlighter {
       Array.prototype.forEach.call(node.childNodes, this._findRecursive.bind(this));
     }
   }
-
 }

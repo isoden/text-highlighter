@@ -13,7 +13,9 @@ gulp.task('webpack', () => {
   gulp.src('./src/text-highlighter.ts')
     .pipe(plumber())
     .pipe(webpack({
-      resolve : ['.ts'],
+      resolve : {
+        extensions : ['', '.ts']
+      },
       output : {
         filename      : 'text-highlighter.js',
         library       : 'TextHighlighter',
@@ -36,7 +38,7 @@ gulp.task('build', () => {
   gulp.src('./lib/text-highlighter.js')
     .pipe(header(`
 /*!
- * text-highlighter.js v1.0.0
+ * text-highlighter.js v1.0.1
  * https://github.com/isoden/text-highlighter.git
  *
  * Copyright (c) 2015 isoden <isoda@maboroshi.biz> (http://isoden.me)
