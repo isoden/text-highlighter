@@ -6,6 +6,7 @@ import {
   first
 } from './util';
 
+const nativeForEach = Array.prototype.forEach;
 
 export = class TextHighlighter {
   public rxSearchWords: RegExp;
@@ -22,7 +23,9 @@ export = class TextHighlighter {
   }
 
   /**
-   * _getFullWidthAndHalfWidth
+   * 全角・半角にマッチするように変換したテキストを返却する
+   * @param  str 入力文字列
+   * @return 変換後の文字列
    */
   protected static _getFullWidthAndHalfWidth(str: string = ''): string {
     return str.split('').map(v => {
@@ -40,7 +43,7 @@ export = class TextHighlighter {
    * @return ハイライト要素
    */
   protected static _createMarker(attrs: {}): HTMLElement {
-    var node = document.createElement('mark');
+    const node = document.createElement('mark');
 
     Object.keys(attrs).forEach(key => node[key] = attrs[key]);
 
@@ -66,7 +69,7 @@ export = class TextHighlighter {
    * ハイライト表示をやめる
    */
   public dehighlight() {
-    Array.prototype.forEach.call(this.el.querySelectorAll('mark'), (node: Element) => {
+    nativeForEach.call(this.el.querySelectorAll('mark'), (node: Element) => {
       node.parentNode.replaceChild(node.firstChild, node);
     });
     this.el.normalize();
@@ -75,7 +78,7 @@ export = class TextHighlighter {
   /**
    * 検索用の正規表現オブジェクトを返却する
    * @param  searchWord 検索テキスト
-   * @param  正規表現のフラグ
+   * @param  flag       正規表現のフラグ
    * @return パースした正規表現オブジェクト
    */
   protected _getRxSearchWords(searchWord: string = '', flag: string = 'gi'): RegExp {
@@ -84,19 +87,19 @@ export = class TextHighlighter {
 
   /**
    * 要素内から検索ワードを再帰的に検索する
-   * @param node
+   * @param node 検索する要素
    */
   protected _findRecursive(node: HTMLElement|Text) {
     if (node.nodeType === Node.TEXT_NODE) {
-      var text         = (<Text>node).data;
-      var matchedIndex = text.search(this.rxSearchWords);
-      var words        = text.slice(matchedIndex).match(this.rxSearchWords);
-      var word         = first(words);
-      var wordLength   = (word || '').length;
+      let text         = (<Text>node).data;
+      let matchedIndex = text.search(this.rxSearchWords);
+      let words        = text.slice(matchedIndex).match(this.rxSearchWords);
+      let word         = first(words);
+      let wordLength   = (word || '').length;
 
       if (matchedIndex > -1) {
-        var rest     = document.createTextNode(text.substr(matchedIndex + wordLength));
-        var markNode = TextHighlighter._createMarker({className: 'highlight'});
+        let rest     = document.createTextNode(text.substr(matchedIndex + wordLength));
+        let markNode = TextHighlighter._createMarker({className: 'highlight'});
 
         (<Text>node).data = text.substr(0, matchedIndex);
         markNode.appendChild(document.createTextNode(text.substr(matchedIndex, wordLength)));
@@ -105,7 +108,7 @@ export = class TextHighlighter {
         this._findRecursive(rest);
       }
     } else if (node.nodeType === Node.ELEMENT_NODE) {
-      Array.prototype.forEach.call(node.childNodes, this._findRecursive.bind(this));
+      nativeForEach.call(node.childNodes, this._findRecursive.bind(this));
     }
   }
 }

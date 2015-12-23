@@ -38,7 +38,7 @@ gulp.task('build', () => {
   gulp.src('./lib/text-highlighter.js')
     .pipe(header(`
 /*!
- * text-highlighter.js v1.0.1
+ * text-highlighter.js v1.0.2
  * https://github.com/isoden/text-highlighter.git
  *
  * Copyright (c) 2015 isoden <isoda@maboroshi.biz> (http://isoden.me)

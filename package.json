@@ -1,9 +1,11 @@
 {
   "name": "text-highlighter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Highlight text in DOM.",
   "main": "lib/text-highlighter.js",
   "scripts": {
+    "start": "gulp",
+    "build": "gulp build",
     "test": "mocha test/text-highlight.test.js"
   },
   "author": "isoden <isoda@maboroshi.biz> (http://isoden.me)",
